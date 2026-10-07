@@ -1,0 +1,94 @@
+{
+  "entities": {
+    "Transaction": {
+      "title": "Transaction",
+      "description": "An income or expense transaction record",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "User ID of the transaction owner",
+          "maxLength": 128
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of transaction",
+          "enum": ["income", "expense"]
+        },
+        "amount": {
+          "type": "number",
+          "description": "Transaction amount in THB"
+        },
+        "category": {
+          "type": "string",
+          "description": "Category of the transaction",
+          "maxLength": 64
+        },
+        "description": {
+          "type": "string",
+          "description": "Detail note or title of the transaction",
+          "maxLength": 256
+        },
+        "date": {
+          "type": "string",
+          "description": "Date of transaction in YYYY-MM-DD format",
+          "maxLength": 10
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when last updated"
+        }
+      },
+      "required": ["userId", "type", "amount", "category", "description", "date", "createdAt"]
+    },
+    "Budget": {
+      "title": "Budget",
+      "description": "Monthly budget target for a category or total",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "User ID who owns this budget",
+          "maxLength": 128
+        },
+        "month": {
+          "type": "string",
+          "description": "Month in YYYY-MM format",
+          "maxLength": 7
+        },
+        "category": {
+          "type": "string",
+          "description": "Category name or 'all'",
+          "maxLength": 64
+        },
+        "limitAmount": {
+          "type": "number",
+          "description": "Budget limit amount in THB"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when updated"
+        }
+      },
+      "required": ["userId", "month", "category", "limitAmount", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Collection of all user transactions"
+    },
+    "/budgets/{budgetId}": {
+      "schema": "Budget",
+      "description": "Collection of monthly budget targets"
+    }
+  }
+}
